@@ -29,6 +29,7 @@ let bottomPipeImg;
 //game physics
 let velocityX = -2;//pipe moves left
 let velocityY = 0;// bird jump speed
+let gravity = 0.4;
 
 
 window.onload = function(){
@@ -61,6 +62,7 @@ function update(){
     context.clearRect(0,0,boardWidth,boardHeight);
 
     //bird draw
+    velocityY += gravity;
     birdy += velocityY;
     context.drawImage(bird_skin,birdx,birdy,bird.width,bird.height);
 
@@ -74,7 +76,7 @@ function update(){
 function placePipes(){
 
     //to generate random pipe heights
-    let randomPipey = pipey - pipeHeight/8 - Math.random()*pipeHeight/2;
+    let randomPipey = pipey - pipeHeight/8 - Math.random()*pipeHeight/1.5 - 4;
     let gaping = board.height / 10
 
     let topPipe ={
