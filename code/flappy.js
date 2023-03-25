@@ -29,7 +29,7 @@ let bottomPipeImg;
 //game physics
 let velocityX = -2;//pipe moves left
 let velocityY = 0;// bird jump speed
-let gravity = 0.4;
+let gravity = 0.2;
 
 
 window.onload = function(){
@@ -63,7 +63,7 @@ function update(){
 
     //bird draw
     velocityY += gravity;
-    birdy += velocityY;
+    birdy = Math.max(birdy + velocityY,0); //limit the bird from going top of the canvas
     context.drawImage(bird_skin,birdx,birdy,bird.width,bird.height);
 
     //pipes draw
