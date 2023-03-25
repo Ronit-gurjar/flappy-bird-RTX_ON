@@ -20,7 +20,7 @@ let bird={
 //pipes
 let pipeArray = [];
 let pipeWidth = 53;
-let pipeHeight = 489;
+let pipeHeight = 484;
 let pipex = boardWidth;
 let pipey = 0;
 let topPipeImg;
@@ -69,10 +69,13 @@ function update(){
     }
 }
 function placePipes(){
+
+    //to generate random pipe heights
+    let randomPipey = pipey - pipeHeight/8 - Math.random()*pipeHeight/2;
     let topPipe ={
         img: topPipeImg,
         x:pipex,
-        y:pipey,
+        y:randomPipey,
         width: pipeWidth,
         height: pipeHeight,
         passed: false
