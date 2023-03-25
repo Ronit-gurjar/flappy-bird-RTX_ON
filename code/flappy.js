@@ -10,7 +10,6 @@ let birdheight = 109;
 let birdx = boardwidth/8;
 let birdy = boardheight/2
 let bird_skin;
-
 let bird={
     x:birdx,
     y:birdy,
@@ -30,4 +29,13 @@ window.onload = function(){
     bird_skin.onload = function(){
         context.drawImage(bird_skin,birdx,birdy,bird.width,bird.height);
     }
+    requestAnimationFrame(update);
+}
+
+function update(){
+    requestAnimationFrame(update);
+    context.clearRect(0,0,boardwidth,boardheight);
+
+    //bird draw
+    context.drawImage(bird_skin,birdx,birdy,bird.width,bird.height);
 }
