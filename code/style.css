@@ -7,7 +7,3 @@ body{
     background-color: skyblue;
     background-image: url("flappy_bg.png");
 }
-
-body.img{
-    position: relative;
-}
