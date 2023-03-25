@@ -27,7 +27,8 @@ let topPipeImg;
 let bottomPipeImg;
 
 //game physics
-let velocityX = -2;//move left
+let velocityX = -2;//pipe moves left
+let velocityY = 0;// bird jump speed
 
 
 window.onload = function(){
@@ -52,6 +53,7 @@ window.onload = function(){
 
     requestAnimationFrame(update);
     setInterval(placePipes,1500);//add pipes to the board every 1.5s
+    document.addEventListener("keydown",moveBird);
 }
 
 function update(){
@@ -59,6 +61,7 @@ function update(){
     context.clearRect(0,0,boardWidth,boardHeight);
 
     //bird draw
+    birdy += velocityY;
     context.drawImage(bird_skin,birdx,birdy,bird.width,bird.height);
 
     //pipes draw
@@ -95,4 +98,11 @@ function placePipes(){
     }
 
     pipeArray.push(bottomPipe);
+}
+
+function moveBird(e) {
+    if (e.code == "Space" || e.code == "ArrowUp" || e.code == "keyX") {
+        //bird jump
+        velocityY = -6;
+    }
 }
