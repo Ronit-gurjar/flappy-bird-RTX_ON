@@ -1,26 +1,39 @@
 //board
 let board;
-let boardwidth = 360;
-let boardheight = 640;
+let boardWidth = 360;
+let boardHeight = 640;
 let context;
 
 //flappy-bird
-let birdwidth = 107;
-let birdheight = 109;
-let birdx = boardwidth/8;
-let birdy = boardheight/2
+let birdWidth = 107;
+let birdHeight = 109;
+let birdx = boardWidth/8;
+let birdy = boardHeight/2
 let bird_skin;
 let bird={
     x:birdx,
     y:birdy,
-    width:birdwidth,
-    height:birdheight
+    width:birdWidth,
+    height:birdHeight
 }
+
+//pipes
+let pipeArray = [];
+let pipeWidth = 53;
+let pipeHeight = 489;
+let pipex = boardWidth;
+let pipey = 0;
+let topPipeImg;
+let bottomPipeImg;
+
+//game physics
+let velocityX = -2;//move left
+
 
 window.onload = function(){
     board = document.getElementById("board");
-    board.height = boardheight;
-    board.width = boardwidth;
+    board.height = boardHeight;
+    board.width = boardWidth;
     context = board.getContext("2d"); // used to draw on board
 
     //draw the bird
@@ -29,13 +42,42 @@ window.onload = function(){
     bird_skin.onload = function(){
         context.drawImage(bird_skin,birdx,birdy,bird.width,bird.height);
     }
+
+    //draw pipe
+    topPipeImg = new Image();
+    topPipeImg.src = "./pngwing_pipedown.png"
+
+    bottomPipeImg = new Image();
+    bottomPipeImg.src = "./pngwing_pipe.png"
+
     requestAnimationFrame(update);
+    setInterval(placePipes,1500);//add pipes to the board every 1.5s
 }
 
 function update(){
     requestAnimationFrame(update);
-    context.clearRect(0,0,boardwidth,boardheight);
+    context.clearRect(0,0,boardWidth,boardHeight);
 
     //bird draw
     context.drawImage(bird_skin,birdx,birdy,bird.width,bird.height);
+
+    //pipes draw
+    for (let i = 0; i < pipeArray.length; i++) {
+        let pipe = pipeArray[i];
+        pipe.x += velocityX;
+        context.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height);
+    }
+}
+function placePipes(){
+    let topPipe ={
+        img: topPipeImg,
+        x:pipex,
+        y:pipey,
+        width: pipeWidth,
+        height: pipeHeight,
+        passed: false
+    }
+
+    pipeArray.push(topPipe);
+
 }
