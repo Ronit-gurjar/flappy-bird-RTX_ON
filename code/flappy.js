@@ -31,6 +31,8 @@ let velocityX = -2;//pipe moves left
 let velocityY = 0;// bird jump speed
 let gravity = 0.2;
 
+let gameOver = false;
+
 
 window.onload = function(){
     board = document.getElementById("board");
@@ -59,6 +61,10 @@ window.onload = function(){
 
 function update(){
     requestAnimationFrame(update);
+    if (gameOver) {
+        alert("gameover");
+        return;
+    }
     context.clearRect(0,0,boardWidth,boardHeight);
 
     //bird draw
@@ -71,9 +77,16 @@ function update(){
         let pipe = pipeArray[i];
         pipe.x += velocityX;
         context.drawImage(pipe.img, pipe.x, pipe.y, pipe.width, pipe.height);
+
+        if (detectCollision(bird, pipe)) {
+            gameOver = true;
+        }
     }
 }
 function placePipes(){
+    if (gameOver) {
+        return;
+    }
 
     //to generate random pipe heights
     let randomPipey = pipey - pipeHeight/8 - Math.random()*pipeHeight/1.5 - 4;
@@ -107,4 +120,12 @@ function moveBird(e) {
         //bird jump
         velocityY = -6;
     }
+}
+
+function detectCollision(a,b) {
+    //to detect collision between two rectangles(Image rects)
+    return a.x < b.x + b.width && 
+            a.x + a.width > b.x &&
+            a.y < b.y + b.height &&
+            a.y + a.height > b.y;
 }
